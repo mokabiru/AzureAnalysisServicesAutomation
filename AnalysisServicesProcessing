@@ -1,0 +1,36 @@
+try
+    {
+     
+                # Output status to console
+                Write-Output "Importing Module SQLServer"
+                import-module SqlServer -DisableNameChecking
+
+                # Output status to console
+                Write-Output "Getting Credentials..."
+
+                ##Getting the credential which we stored earlier.
+                $cred = Get-AutomationPSCredential -Name 'analysiscredential'
+
+ 
+                ## Providing the Server Details
+                $ServerName = "asazure://australiasoutheast.asazure.windows.net/"
+                $DatabaseName = "Tabular"
+
+                # Output status to console
+                Write-Output "Invoke ASdatabase..."
+
+                ## Invoke ASdatabase
+                Invoke-ProcessASDatabase -databasename $DatabaseName -Server $ServerName -Credential $cred -RefreshType "Full"
+        
+    }
+    catch
+    {
+        # Output status to console
+        Write-Output "Error in the automation job..."
+     
+        # Set $errorMessage
+        $errorMessage = $_
+
+        Write-Output $errorMessage
+         
+     }
